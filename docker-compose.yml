@@ -1,17 +1,18 @@
 services:
+
   sonarr:
-    image: lscr.io/linuxserver/sonarr:latest
+    image: ghcr.io/wepwawet/anisette:latest  # актуальный форк AnimeSonarr
     container_name: sonarr
     environment:
       - PUID=${PUID}       
       - PGID=${PGID}  
       - TZ=Asia/Yekaterinburg
     volumes:
-      - ./sonarr/config:/config
-      - ${LOAD_PATH}:/downloads  
-      - ${MEDIA_PATH}:/tv
+      - ./config:/config
+      - ${LOAD_PATH}:/anime    
+      - ${LOAD_PATH}:/downloads
     ports:
-      - 8989:8989
+      - "127.0.0.1:8989:8989" # Биндим только на localhost, так как снаружи будет Nginx
     restart: unless-stopped
     networks:
       - hcp-network
